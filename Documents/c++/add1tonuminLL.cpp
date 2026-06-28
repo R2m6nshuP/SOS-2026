@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-int main(){
 class Node{
 public: 
 int val;
@@ -15,12 +14,7 @@ Node(int val,Node* p){
 }
 };
 
-Node* head = new Node(1);
-Node* second = new Node(2);
-Node* third = new Node(3);
-Node* fourth = new Node(4);
-Node* fifth = new Node(5);
-
+Node* reversell(Node* head){
 Node* prev=NULL;
 Node* ptr=head;
 while(ptr){
@@ -29,36 +23,40 @@ ptr->next=prev;
 prev=ptr;
 ptr=next;
 }
+return prev;
+}
 
-ptr=prev;
+int main(){
+
+
+Node* head = new Node(9);
+Node* second = new Node(9);
+Node* third = new Node(9);
+Node* fourth = new Node(9);
+Node* fifth = new Node(0);
+head->next=second;
+second->next=third;
+third->next=fourth;
+fourth->next=fifth;
+
+head=reversell(head);
+Node* ptr=head;
 int carry=0;
-carry=(ptr->val+1)/10;  
-while(ptr){
-    carry=(ptr->val+carry)/10;  
-
-    if(!carry) {ptr->val++;break;}
-    else{
-        ptr->val=0;
-    }
-    if(!ptr->next && carry>0){
-    Node* last= new Node(1);
-    ptr->next=last;
+do{
+    carry=(ptr->val+1)/10;
+    ptr->val=(ptr->val+1)%10; 
+    if(carry && !ptr->next){
+        ptr->next = new Node(carry);
+        break;
     }
     ptr=ptr->next;
-}
-ptr=prev;
-prev=NULL;
-
-while(ptr){
-Node* next=ptr->next;
-ptr->next=prev;
-prev=ptr;
-ptr=next;
-}
+}while(carry);
  
-while (prev) {
-            cout << prev->val;
-            prev = prev->next;
+head=reversell(head);
+
+while (head) {
+            cout << head->val;
+            head = head->next;
         }
         cout << endl;
     
